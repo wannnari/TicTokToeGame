@@ -11,6 +11,7 @@
 		E3C3A3962BBC3AB8003E24A7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3952BBC3AB8003E24A7 /* ContentView.swift */; };
 		E3C3A3982BBC3AB9003E24A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */; };
 		E3C3A39B2BBC3AB9003E24A7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3C3A39A2BBC3AB9003E24A7 /* Preview Assets.xcassets */; };
+		E3C3A3A22BBC4285003E24A7 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3A12BBC4285003E24A7 /* StartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		E3C3A3952BBC3AB8003E24A7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3C3A39A2BBC3AB9003E24A7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E3C3A3A12BBC4285003E24A7 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				E3C3A3932BBC3AB8003E24A7 /* TicTokToeGameApp.swift */,
 				E3C3A3952BBC3AB8003E24A7 /* ContentView.swift */,
+				E3C3A3A12BBC4285003E24A7 /* StartView.swift */,
 				E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */,
 				E3C3A3992BBC3AB9003E24A7 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3C3A3A22BBC4285003E24A7 /* StartView.swift in Sources */,
 				E3C3A3962BBC3AB8003E24A7 /* ContentView.swift in Sources */,
 				E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */,
 			);
