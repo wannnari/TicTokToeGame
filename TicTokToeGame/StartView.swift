@@ -8,15 +8,22 @@
 import SwiftUI
 
 struct StartView: View {
+    @State var isStart: Bool = false;
+    
     var body: some View {
-        Text("⭕️❌ゲーム")
+ 
+
+        if isStart {
+            ContentView()
+        }else{
+            Text("⭕️❌ゲーム")
+                .font(.system(size: 50))
+            Button("スタート"){
+                isStart.toggle()
+            }
+            .padding()
             .font(.system(size: 50))
-        Button("スタート"){
-            
         }
-        .padding()
-        .font(.system(size: 50))
-        
     }
 }
 
