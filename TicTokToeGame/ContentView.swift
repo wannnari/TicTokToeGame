@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var isChecked = false
     @State private var selections: [Bool?] = Array(repeating: nil, count: 9)
+    @EnvironmentObject var timerContorller: TimerModel
     
     var body: some View {
         
@@ -19,14 +20,26 @@ struct ContentView: View {
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
-                // 1辺100の正方形を3×3で並べる
                 VStack{
+                    /*タイマーを表示　15秒過ぎたら自動的に相手ターンに移動*/
+                    Text("\(timerContorller.count)")
+                    
+                    // Start/Stop Timer Button
+                    Button(action: {
+                        if(timerContorller.timer == nil){
+                            timerContorller.start()
+                        }
+                    }){
+                        // timerの状態でラベルの文字を切り替える
+                        Text("\((timerContorller.timer != nil) ? "Stop Timer" : "Start Timer")")
+                    }
+                    
                     // 3列のグリッドを作成するための設定
                     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
-                    Text(isChecked ? "⭕️の人のターン" : "❌の人のターン")
+                    Text(isChecked || timerContorller.isTurnEnd ? "⭕️の人のターン" : "❌の人のターン")
                         .font(.largeTitle)
                     
-                    //3*3の正方形を作成
+                    // 1辺100の正方形を3×3で並べる
                     LazyVGrid(columns: columns, spacing: 10){
                         ForEach(0..<9){index in
                             Rectangle()
@@ -38,21 +51,20 @@ struct ContentView: View {
                                         .opacity(selections[index] == nil ? 0 : 1 )
                                         .font(.largeTitle)
                                 )
-                                // 四角形をタッチしたらマルかバツになり相手のターンになる
                                 .onTapGesture {
+                                    // 四角形をタッチしたらマルかバツになり相手のターンになる
                                     selections[index] = isChecked
                                     isChecked.toggle()
+                                    timerContorller.stop()
                                 }
-                            
                         }
                     }
                 }
             }
-            
         }
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}

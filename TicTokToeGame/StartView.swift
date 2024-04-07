@@ -15,6 +15,7 @@ struct StartView: View {
 
         if isStart {
             ContentView()
+                .environmentObject(TimerModel())
         }else{
             Text("⭕️❌ゲーム")
                 .font(.system(size: 50))
