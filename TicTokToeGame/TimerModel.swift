@@ -28,15 +28,18 @@ class TimerModel: ObservableObject {
                 self.timer?.invalidate()
                 self.timer = nil
                 self.isTurnEnd.toggle()
+                self.start()
                 return
             }
         }
     }
 
     // タイマーストップ
-    func stop(){
+    func restart(){
         timer?.invalidate()
         timer = nil
+        self.isTurnEnd.toggle()
+        self.start()
     }
 
 }

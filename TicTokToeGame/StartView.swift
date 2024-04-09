@@ -9,7 +9,6 @@ import SwiftUI
 
 struct StartView: View {
     @State var isStart: Bool = false;
-    
     var body: some View {
  
 
