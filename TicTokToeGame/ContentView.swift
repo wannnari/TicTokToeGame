@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
     @State private var selections: [Bool?] = Array(repeating: nil, count: 9)
+    @State private var isGameSet : Bool = false
     @EnvironmentObject var timerContorller: TimerModel
     
     var body: some View {
@@ -45,8 +47,18 @@ struct ContentView: View {
                                 // 　未入力の四角形をタッチしたらマルかバツになり相手のターンになる
                                 if(selections[index] == nil){
                                     selections[index] = timerContorller.isTurnEnd
-                                    timerContorller.restart()
+                                    // ３つ揃ったら勝ち
+                                    if(isLineOfThrees(grid: selections)){
+                                        isGameSet.toggle()
+                                        timerContorller.stop()
+                                        
+                                    }else{
+                                        timerContorller.restart()
+                                    }
                                 }
+                            }
+                            .sheet(isPresented:$isGameSet){
+                                ResultView()
                             }
                     }
                 }
@@ -58,6 +70,46 @@ struct ContentView: View {
         }
     }
 }
+
+
+// 三つ揃ったかの判定処理
+func isLineOfThrees(grid: [Bool?]) -> Bool{
+    var board: [[Bool?]] = [[nil,nil,nil],[nil,nil,nil],[nil,nil,nil]]
+    let boardSize = board.count
+    
+    board[0][0] = grid[0]
+    board[0][1] = grid[1]
+    board[0][2] = grid[2]
+    board[1][0] = grid[3]
+    board[1][1] = grid[4]
+    board[1][2] = grid[5]
+    board[2][0] = grid[6]
+    board[2][1] = grid[7]
+    board[2][2] = grid[8]
+    
+    // 横のチェック
+    for row in 0..<boardSize {
+        if board[row][0] != nil, board[row][0] == board[row][1], board[row][1] == board[row][2] {
+            return true
+        }
+    }
+    // 縦のチェック
+    for column in 0..<boardSize {
+        if board[0][column] != nil, board[0][column] == board[1][column], board[1][column] == board[2][column] {
+            return true
+        }
+    }
+    
+    // 斜めのチェック
+    if board[0][0] != nil, board[0][0] == board[1][1], board[1][1] == board[2][2] {
+        return true
+    }
+    if board[0][2] != nil, board[0][2] == board[1][1], board[1][1] == board[2][0] {
+        return true
+    }
+    return false
+}
+
 
 #Preview {
     ContentView()
