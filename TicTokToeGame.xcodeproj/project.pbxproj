@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E3BF64A62BC57EB400BCF0DC /* CPUModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */; };
+		E3BF64E22BC9752100BCF0DC /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BF64E12BC9752100BCF0DC /* ResultView.swift */; };
 		E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3932BBC3AB8003E24A7 /* TicTokToeGameApp.swift */; };
 		E3C3A3982BBC3AB9003E24A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */; };
 		E3C3A39B2BBC3AB9003E24A7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3C3A39A2BBC3AB9003E24A7 /* Preview Assets.xcassets */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUModel.swift; sourceTree = "<group>"; };
+		E3BF64E12BC9752100BCF0DC /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		E3C3A3902BBC3AB8003E24A7 /* TicTokToeGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTokToeGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3C3A3932BBC3AB8003E24A7 /* TicTokToeGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTokToeGameApp.swift; sourceTree = "<group>"; };
 		E3C3A3952BBC3AB8003E24A7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				E3C3A3952BBC3AB8003E24A7 /* ContentView.swift */,
 				E3C3A3A12BBC4285003E24A7 /* StartView.swift */,
 				E3C3A3A32BC2B071003E24A7 /* TimerModel.swift */,
+				E3BF64E12BC9752100BCF0DC /* ResultView.swift */,
 				E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */,
 				E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */,
 				E3C3A3992BBC3AB9003E24A7 /* Preview Content */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3C3A3A22BBC4285003E24A7 /* StartView.swift in Sources */,
+				E3BF64E22BC9752100BCF0DC /* ResultView.swift in Sources */,
 				E3BF64A62BC57EB400BCF0DC /* CPUModel.swift in Sources */,
 				E3C3A3A42BC2B071003E24A7 /* TimerModel.swift in Sources */,
 				E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */,

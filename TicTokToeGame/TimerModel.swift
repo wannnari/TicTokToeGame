@@ -34,12 +34,18 @@ class TimerModel: ObservableObject {
         }
     }
 
-    // タイマーストップ
+    // タイマーリスタート（ターンが変わる）
     func restart(){
         timer?.invalidate()
         timer = nil
         self.isTurnEnd.toggle()
         self.start()
+    }
+    
+    // タイマーストップ
+    func stop(){
+        timer?.invalidate()
+        timer = nil
     }
 
 }
