@@ -12,9 +12,10 @@ struct ResultView: View {
     
     var body: some View {
         ZStack{
-            Color.gray
+            Color.yellow
             Text("Winner")
                 .font(.system(size:100))
+                .foregroundColor(Color.red)
         }
     }
 }

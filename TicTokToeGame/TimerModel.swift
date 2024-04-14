@@ -14,7 +14,7 @@ class TimerModel: ObservableObject {
     
     @Published var timer : Timer!
     @Published var count : Int = 0
-    @Published var isTurnEnd : Bool = false
+    @Published var isTurnEnd : Bool = true
     @State private var STARTTIME : Int = 15
     
     //　タイマースタート
