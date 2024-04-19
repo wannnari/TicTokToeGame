@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct ContentView: View {
-    @State private var selections: [Bool?] = Array(repeating: nil, count: 9)
+    @State private var selections: [Bool?] = Array(repeating: nil, count: 16)
     @State private var isGameSet : Bool = false
     @EnvironmentObject var timerContorller: TimerModel
     
@@ -32,10 +32,10 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(Int(timerContorller.count) < 5 ? .red:.black)
                     // 3列のグリッドを作成するための設定
-                    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
+                    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 4)
                     // 1辺100の正方形を3×3で並べる
                     LazyVGrid(columns: columns, spacing: 10){
-                        ForEach(0..<9){index in
+                        ForEach(0..<16){index in
                             Rectangle()
                                 .fill(Color.white)              // 図形の塗りつぶしに使うViewを指定
                                 .frame(width:100, height: 100)  // フレームサイズ指定
@@ -50,7 +50,7 @@ struct ContentView: View {
                                     if(selections[index] == nil){
                                         selections[index] = timerContorller.isTurnEnd
                                         // ３つ揃ったら勝ち
-                                        if(isLineOfThrees(grid: selections)){
+                                        if(hasThreeInARow(grid: selections)){
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                                                 isGameSet.toggle()
                                                 timerContorller.stop()
@@ -74,45 +74,131 @@ struct ContentView: View {
 
 
 // 三つ揃ったかの判定処理
-func isLineOfThrees(grid: [Bool?]) -> Bool{
-    var board: [[Bool?]] = [[nil,nil,nil],[nil,nil,nil],[nil,nil,nil]]
-    let boardSize = board.count
-    
-    board[0][0] = grid[0]
-    board[0][1] = grid[1]
-    board[0][2] = grid[2]
-    board[1][0] = grid[3]
-    board[1][1] = grid[4]
-    board[1][2] = grid[5]
-    board[2][0] = grid[6]
-    board[2][1] = grid[7]
-    board[2][2] = grid[8]
-    
-    // 横のチェック
-    for row in 0..<boardSize {
-        if board[row][0] != nil, board[row][0] == board[row][1], board[row][1] == board[row][2] {
+//func isLineOfThrees(grid: [Bool?]) -> Bool{
+//    var squareRoot = Int(sqrt(Double(grid.count)))
+//    var board = [[Bool?]](repeating: [Bool?](repeating: nil,count: squareRoot), count: squareRoot)
+////    var board: [[Bool?]] = [[nil,nil,nil],[nil,nil,nil],[nil,nil,nil]]
+////    board[0][0] = grid[0]
+////    board[0][1] = grid[1]
+////    board[0][2] = grid[2]
+////    board[1][0] = grid[3]
+////    board[1][1] = grid[4]
+////    board[1][2] = grid[5]
+////    board[2][0] = grid[6]
+////    board[2][1] = grid[7]
+////    board[2][2] = grid[8]
+//    let boardSize = squareRoot
+//    var boardSizeCounter = 0
+//    for squareSide in 0..<squareRoot {
+//        for otherSide in 0..<squareRoot{
+//            board[squareSide][otherSide] = grid[boardSizeCounter]
+//            boardSizeCounter = boardSizeCounter + 1
+//        }
+//    }
+
+//    // 横のチェック
+//    for row in 0..<boardSize {
+//        if board[row][0] != nil, board[row][0] == board[row][1], board[row][1] == board[row][2] {
+//            return true
+//        }
+//    }
+//    if isBesideArrange(arr: board){
+//        return true
+//    }
+//    // 縦のチェック
+//    for column in 0..<boardSize {
+//        if board[0][column] != nil, board[0][column] == board[1][column], board[1][column] == board[2][column] {
+//            return true
+//        }
+//    }
+//    if isVerticalArrange(arr: board){
+//        return true
+//    }
+//
+//    // 斜めのチェック
+//    if board[0][0] != nil, board[0][0] == board[1][1], board[1][1] == board[2][2] {
+//        return true
+//    }
+//    if board[0][2] != nil, board[0][2] == board[1][1], board[1][1] == board[2][0] {
+//        return true
+//    }
+//    if isDiagonalArrange(arr: board){
+//        return true
+//    }
+//
+
+//    if hasThreeInARow(board: board){
+//        return true
+//    }else{
+//        return false
+//    }
+//    return false
+//}
+
+
+#Preview {
+    ContentView()
+        .environmentObject(TimerModel())
+}
+
+func hasThreeInARow(grid: [Bool?]) -> Bool{
+    var squareRoot = Int(sqrt(Double(grid.count)))
+    var board = [[Bool?]](repeating: [Bool?](repeating: nil,count: squareRoot), count: squareRoot)
+    let boardSize = squareRoot
+    var boardSizeCounter = 0
+    for squareSide in 0..<squareRoot {
+        for otherSide in 0..<squareRoot{
+            board[squareSide][otherSide] = grid[boardSizeCounter]
+            boardSizeCounter = boardSizeCounter + 1
+        }
+    }
+    for row in 0..<squareRoot{
+        if checkLineForThree(values: board[row]){
             return true
         }
     }
     // 縦のチェック
-    for column in 0..<boardSize {
-        if board[0][column] != nil, board[0][column] == board[1][column], board[1][column] == board[2][column] {
+    for column in 0..<squareRoot {
+        var columnValues: [Bool?] = []
+        for row in 0..<squareRoot {
+            columnValues.append(board[row][column])
+        }
+        if checkLineForThree(values: columnValues) {
             return true
         }
     }
-    
-    // 斜めのチェック
-    if board[0][0] != nil, board[0][0] == board[1][1], board[1][1] == board[2][2] {
+    // 主対角線のチェック (\ direction)
+    var diag1Values: [Bool?] = []
+    for index in 0..<squareRoot {
+        diag1Values.append(board[index][index])
+    }
+    if checkLineForThree(values: diag1Values) {
         return true
     }
-    if board[0][2] != nil, board[0][2] == board[1][1], board[1][1] == board[2][0] {
+    // 副対角線のチェック (/ direction)
+    var diag2Values: [Bool?] = []
+    for index in 0..<squareRoot {
+        diag2Values.append(board[index][squareRoot - 1 - index])
+    }
+    if checkLineForThree(values: diag2Values) {
         return true
     }
     return false
 }
 
 
-#Preview {
-    ContentView()
-        .environmentObject(TimerModel())
+func checkLineForThree(values:[Bool?]) -> Bool{
+    var current = values[0]
+    var count = 1
+    
+    for value in values[1...]{
+        if value == current && value != nil {
+            count += 1
+            if count >= 3{return true}
+        }else{
+            current = value
+            count = 1
+        }
+    }
+    return false
 }

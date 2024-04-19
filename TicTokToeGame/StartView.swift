@@ -18,11 +18,16 @@ struct StartView: View {
         }else{
             Text("⭕️❌ゲーム")
                 .font(.system(size: 50))
-            Button("スタート"){
-                isStart.toggle()
+            Button(action:{ isStart.toggle()
+            }){
+                Text("スタート")
+                    .padding()
+                    .font(.system(size: 50))
+                    .foregroundColor(Color.white)
+                    .background(Color.purple)
+                    .cornerRadius(10)
             }
-            .padding()
-            .font(.system(size: 50))
+            
         }
     }
 }
