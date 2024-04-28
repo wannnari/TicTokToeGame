@@ -9,6 +9,8 @@ import SwiftUI
 
 struct StartView: View {
     @State var isStart: Bool = false;
+    @State var gameMode:[String] = ["3×3","4×4","5×5"]
+    @State var defaultMode:String = "3×3"
     var body: some View {
  
 
@@ -18,6 +20,7 @@ struct StartView: View {
         }else{
             Text("⭕️❌ゲーム")
                 .font(.system(size: 50))
+
             Button(action:{ isStart.toggle()
             }){
                 Text("スタート")
@@ -27,6 +30,16 @@ struct StartView: View {
                     .background(Color.purple)
                     .cornerRadius(10)
             }
+            
+            Picker(selection: $defaultMode, label: Text("マス目を選択"),content: {
+                ForEach(gameMode, id:\.self){
+                    value in Text("\(value)")
+                        .tag(value)
+                        .font(.system(size: 50))
+                }
+            })
+            .pickerStyle(.menu)
+
             
         }
     }
