@@ -9,7 +9,8 @@ import SwiftUI
 
 struct StartView: View {
     @State var isStart: Bool = false;
-    @State var gameMode:[String] = ["3×3","4×4","5×5"]
+    @EnvironmentObject var gameMode:gameModeModel
+//    @State var gameMode:[String: Int] = ["3×3":3,"4×4":4,"5×5":5]
     @State var defaultMode:String = "3×3"
     var body: some View {
  
@@ -31,12 +32,17 @@ struct StartView: View {
                     .cornerRadius(10)
             }
             
-            Picker(selection: $defaultMode, label: Text("マス目を選択"),content: {
-                ForEach(gameMode, id:\.self){
-                    value in Text("\(value)")
-                        .tag(value)
+            Picker(selection: $gameMode.selectedMode, label: Text("マス目を選択"),content: {
+                ForEach(gameMode.gameModeList, id: \.key){ mode in
+                    Text("\(mode.value)")
+                        .tag(mode.key)
                         .font(.system(size: 50))
                 }
+//                ForEach(gameMode, id:\.self){
+//                    mode in Text("\(mode)")
+//                        .tag(mode)
+//                        .font(.system(size: 50))
+//                }
             })
             .pickerStyle(.menu)
 
@@ -45,6 +51,6 @@ struct StartView: View {
     }
 }
 
-#Preview {
-    StartView()
-}
+//#Preview {
+//    StartView()
+//}

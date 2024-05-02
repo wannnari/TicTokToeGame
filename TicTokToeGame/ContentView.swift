@@ -7,23 +7,27 @@
 
 import SwiftUI
 import Combine
+import Foundation
 
 struct ContentView: View {
-    @State private var selections: [Bool?] = Array(repeating: nil, count: 9)
-    @State private var isGameSet : Bool = false
     @EnvironmentObject var timerContorller: TimerModel
+    @EnvironmentObject var gameMode : gameModeModel
     @State var winner : String = ""
+    @State private var isGameSet : Bool = false
     
     var body: some View {
         if (isGameSet){
             // どちらかが三つ並んで揃ったら結果画面に遷移
             ResultView(winnerUser: $winner)
         }else{
+            var selectedMode = gameMode.selectedMode
+            var selections: [Bool?] = Array(repeating: nil, count: selectedMode)
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
                 VStack{
                     // ターンを表示
+
                     Text(timerContorller.isTurnEnd ? "⭕️の人のターン" : "❌の人のターン")
                         .font(.largeTitle)
                         .padding()
@@ -33,10 +37,14 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(Int(timerContorller.count) < 5 ? .red:.black)
                     // 3列のグリッドを作成するための設定
-                    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
+//                    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
+                    
+                    let columnSize = 0..<Int(pow(Double(selectedMode),Double(2)))
+                    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: selectedMode)
+                    
                     // 1辺100の正方形を3×3で並べる
                     LazyVGrid(columns: columns, spacing: 10){
-                        ForEach(0..<9){index in
+                        ForEach(columnSize){index in
                             Rectangle()
                                 .fill(Color.white)              // 図形の塗りつぶしに使うViewを指定
                                 .frame(width:100, height: 100)  // フレームサイズ指定
