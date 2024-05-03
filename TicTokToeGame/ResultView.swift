@@ -12,7 +12,9 @@ struct ResultView: View {
     
     @State var isRestart : Bool = false
     @State var isMenu : Bool = false
+    @State var isFinish : Bool = false
     @Binding var winnerUser : String
+    @Binding var resultGrid : [Bool?]
     
     var body: some View {
         
@@ -46,6 +48,12 @@ struct ResultView: View {
                             .foregroundColor(Color.white)
                             .background(Color.blue)
                             .cornerRadius(10)
+                    }
+                    Button("ゲーム終了時の盤面を見る"){
+                        isFinish.toggle()
+                    }
+                    .sheet(isPresented: $isFinish){
+                        FinishView(finishGrid: $resultGrid)
                     }
                 }
             }

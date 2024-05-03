@@ -9,15 +9,10 @@ import Foundation
 import SwiftUI
 import Combine
 
-//ゲームモードの選択肢
-struct Mode: Identifiable{
-    var id : Int
-    var mode : String
-}
-
-
+//ゲームモードクラス
 class gameModeModel : ObservableObject{
-    
+
+    //ゲームモードの選択肢
     let gameMode = [
         3 : "3×3",
         4 : "4×4",
