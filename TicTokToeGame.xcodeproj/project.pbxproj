@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E3215BC82BDF6DC3003642E7 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3215BC72BDF6DC3003642E7 /* GameMode.swift */; };
+		E3215BCA2BE51027003642E7 /* FinishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3215BC92BE51027003642E7 /* FinishView.swift */; };
 		E3BF64A62BC57EB400BCF0DC /* CPUModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */; };
 		E3BF64E22BC9752100BCF0DC /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BF64E12BC9752100BCF0DC /* ResultView.swift */; };
 		E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3932BBC3AB8003E24A7 /* TicTokToeGameApp.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		E3215BC72BDF6DC3003642E7 /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
+		E3215BC92BE51027003642E7 /* FinishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishView.swift; sourceTree = "<group>"; };
 		E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUModel.swift; sourceTree = "<group>"; };
 		E3BF64E12BC9752100BCF0DC /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		E3C3A3902BBC3AB8003E24A7 /* TicTokToeGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTokToeGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +70,7 @@
 				E3BF64E12BC9752100BCF0DC /* ResultView.swift */,
 				E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */,
 				E3215BC72BDF6DC3003642E7 /* GameMode.swift */,
+				E3215BC92BE51027003642E7 /* FinishView.swift */,
 				E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */,
 				E3C3A3992BBC3AB9003E24A7 /* Preview Content */,
 			);
@@ -159,6 +162,7 @@
 				E3C3A3A42BC2B071003E24A7 /* TimerModel.swift in Sources */,
 				E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */,
 				E3CC66452BC0163000D65627 /* ContentView.swift in Sources */,
+				E3215BCA2BE51027003642E7 /* FinishView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
