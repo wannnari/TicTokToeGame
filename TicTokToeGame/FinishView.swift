@@ -11,14 +11,14 @@ import SwiftUI
 // 結果画面を表示
 struct FinishView: View {
     @Binding var finishGrid: [Bool?]
-    @EnvironmentObject var gameMode : gameModeModel
+    @EnvironmentObject var gameModel : gameModel
     var body: some View {
         ZStack {
             Color.blue
                 .ignoresSafeArea()
             VStack{
                 let columnSizeRange = 0..<finishGrid.count //グリッドの範囲
-                let selectedMode = gameMode.selectedMode
+                let selectedMode = gameModel.selectedMode
                 let columns: [GridItem] = Array(repeating: .init(.flexible()), count:selectedMode) // 3列のグリッドを作成するための設定
                 LazyVGrid(columns: columns, spacing: 10){
                     ForEach(columnSizeRange){index in

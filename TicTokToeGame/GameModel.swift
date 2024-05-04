@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 import Combine
 
-//ゲームモードクラス
-class gameModeModel : ObservableObject{
+//ゲームクラス
+class gameModel : ObservableObject{
 
     //ゲームモードの選択肢
     let gameMode = [
@@ -24,6 +24,7 @@ class gameModeModel : ObservableObject{
     }
     
     @Published var selectedMode : Int = 3
+    
 }
 
 

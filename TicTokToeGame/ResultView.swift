@@ -19,8 +19,10 @@ struct ResultView: View {
     var body: some View {
         
         if isRestart{
-            ContentView()
+            // 対戦画面
+            GameView()
         }else if isMenu{
+            // ホーム画面
             StartView()
         }else{
             ZStack{
@@ -49,8 +51,13 @@ struct ResultView: View {
                             .background(Color.blue)
                             .cornerRadius(10)
                     }
-                    Button("ゲーム終了時の盤面を見る"){
-                        isFinish.toggle()
+                    Button(action:{isFinish.toggle()}){
+                        Text("ゲーム終了時の盤面を見る")
+                            .padding()
+                            .font(.system(size: 40))
+                            .foregroundColor(Color.white)
+                            .background(Color.gray)
+                            .cornerRadius(10)
                     }
                     .sheet(isPresented: $isFinish){
                         FinishView(finishGrid: $resultGrid)

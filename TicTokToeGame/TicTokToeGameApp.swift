@@ -12,7 +12,7 @@ struct TicTokToeGameApp: App {
     var body: some Scene {
         WindowGroup {
             StartView()
-                .environmentObject(gameModeModel())
+                .environmentObject(gameModel())
 
         }
     }
