@@ -10,6 +10,7 @@ import SwiftUI
 // 勝利画面
 struct ResultView: View {
     
+    @EnvironmentObject var gameModel : gameModel
     @State var isRestart : Bool = false
     @State var isMenu : Bool = false
     @State var isFinish : Bool = false
@@ -20,7 +21,7 @@ struct ResultView: View {
         
         if isRestart{
             // 対戦画面
-            GameView()
+            GameView(tictactoeModel: TicTacToeViewModel(boardSize: gameModel.selectedSquaresMode))
         }else if isMenu{
             // ホーム画面
             StartView()

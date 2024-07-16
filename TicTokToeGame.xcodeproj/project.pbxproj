@@ -18,6 +18,7 @@
 		E3C3A3A22BBC4285003E24A7 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3A12BBC4285003E24A7 /* StartView.swift */; };
 		E3C3A3A42BC2B071003E24A7 /* TimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3A32BC2B071003E24A7 /* TimerModel.swift */; };
 		E3CC66452BC0163000D65627 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3952BBC3AB8003E24A7 /* GameView.swift */; };
+		E3E720C52C46655B009B0006 /* TicTacToeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E720C42C46655B009B0006 /* TicTacToeModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		E3C3A39A2BBC3AB9003E24A7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E3C3A3A12BBC4285003E24A7 /* StartView.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; tabWidth = 4; };
 		E3C3A3A32BC2B071003E24A7 /* TimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModel.swift; sourceTree = "<group>"; };
+		E3E720C42C46655B009B0006 /* TicTacToeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */,
 				E3215BC72BDF6DC3003642E7 /* GameModel.swift */,
 				E3215BC92BE51027003642E7 /* FinishView.swift */,
+				E3E720C42C46655B009B0006 /* TicTacToeModel.swift */,
 				E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */,
 				E3C3A3992BBC3AB9003E24A7 /* Preview Content */,
 			);
@@ -166,6 +169,7 @@
 				E3C3A3A42BC2B071003E24A7 /* TimerModel.swift in Sources */,
 				E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */,
 				E3CC66452BC0163000D65627 /* GameView.swift in Sources */,
+				E3E720C52C46655B009B0006 /* TicTacToeModel.swift in Sources */,
 				E3215BCA2BE51027003642E7 /* FinishView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

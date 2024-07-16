@@ -18,7 +18,7 @@ struct FinishView: View {
                 .ignoresSafeArea()
             VStack{
                 let columnSizeRange = 0..<finishGrid.count //グリッドの範囲
-                let selectedMode = gameModel.selectedMode
+                let selectedMode = gameModel.selectedSquaresMode
                 let columns: [GridItem] = Array(repeating: .init(.flexible()), count:selectedMode) // 3列のグリッドを作成するための設定
                 LazyVGrid(columns: columns, spacing: 10){
                     ForEach(columnSizeRange){index in

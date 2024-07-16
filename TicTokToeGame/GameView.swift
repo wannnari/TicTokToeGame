@@ -13,17 +13,18 @@ import Foundation
 struct GameView: View {
     @EnvironmentObject var timerContorller: TimerModel
     @EnvironmentObject var gameModel : gameModel
-    @StateObject var viewModel = GameViewModel()
+    @ObservedObject var tictactoeModel : TicTacToeViewModel
     @State var winner : String = ""
-    @State private var isGameSet : Bool = false
     @State var selections: [Bool?] = []
     
     var body: some View {
-        let selectedMode = gameModel.selectedMode
-        let columnSize = Int(pow(Double(selectedMode),Double(2)))
-        if (viewModel.isGameSet){
+        let selectedSquaresMode = gameModel.selectedSquaresMode
+        let selectedGameMode = gameModel.selectedGameMode
+        let columnSize = Int(pow(Double(selectedSquaresMode),Double(2)))
+
+        if (tictactoeModel.isGameSet){
             // どちらかが三つ並んで揃ったら結果画面に遷移
-            ResultView(winnerUser: $winner,resultGrid: $selections)
+            ResultView(winnerUser: $winner,resultGrid: $tictactoeModel.board)
         }else{
             // ゲーム画面
             ZStack {
@@ -42,7 +43,7 @@ struct GameView: View {
                         .foregroundColor(Int(timerContorller.count) < 5 ? .red:.black)
                     
                     let columnSizeRange = 0..<columnSize //グリッドの範囲
-                    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: selectedMode) // 3列のグリッドを作成するための設定
+                    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: selectedSquaresMode) // 3列のグリッドを作成するための設定
                     // 1辺100の正方形を並べる
                     LazyVGrid(columns: columns, spacing: 10){
                         ForEach(columnSizeRange){index in
@@ -52,24 +53,28 @@ struct GameView: View {
                                     .frame(width:100, height: 100)  // フレームサイズ指定
                                     .overlay(
                                         // 丸かバツを表示する
-                                        Text(selections[index] ?? false ? "⭕️" : "❌")
-                                            .opacity(selections[index] == nil ? 0 : 1 )
+                                        Text(tictactoeModel.board[index] ?? false ? "⭕️" : "❌")
+                                            .opacity(tictactoeModel.board[index] == nil ? 0 : 1 )
                                             .font(.largeTitle)
                                     )
                                     .onTapGesture {
                                         // 未入力の四角形をタッチしたらマルかバツになり相手のターンになる
-                                        if(selections[index] == nil){
-                                            selections[index] = timerContorller.isTurnEnd
+                                        if(tictactoeModel.board[index] == nil){
+                                            if(selectedGameMode == 1){
+                                                tictactoeModel.makeMove(at:index, player: timerContorller.isTurnEnd)
+                                            }else{
+                                                tictactoeModel.makeMoveAfterRemove(at:index, player: timerContorller.isTurnEnd)
+                                            }
                                             // ３つ揃ったら勝ち
-                                            if(viewModel.hasThreeInARow(grid: selections)){
+                                            if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)){
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                                                    winner = viewModel.hasFinidhedWin(currentPlayer: timerContorller.isTurnEnd)
+                                                    winner = tictactoeModel.hasFinidhedWin(currentPlayer: timerContorller.isTurnEnd)
                                                     timerContorller.stop()
                                                 }
                                             }else{
                                                 // 全てマス目が埋まったとしても勝負がついていなければ引き分けにする
-                                                if(viewModel.isDraw(grid: selections)){
-                                                    winner = viewModel.hasFinishedDraw()
+                                                if(tictactoeModel.isDraw(grid: tictactoeModel.board)){
+                                                    winner = tictactoeModel.hasFinishedDraw()
                                                     timerContorller.stop()
                                                 }else{
                                                     timerContorller.restart()

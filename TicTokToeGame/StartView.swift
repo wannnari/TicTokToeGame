@@ -13,7 +13,7 @@ struct StartView: View {
     
     var body: some View {
         if isStart {
-            GameView()
+            GameView(tictactoeModel: TicTacToeViewModel(boardSize: gameModel.selectedSquaresMode))
                 .environmentObject(TimerModel())
         }else{
             Text("⭕️❌ゲーム")
@@ -29,7 +29,16 @@ struct StartView: View {
                     .cornerRadius(10)
             }
             
-            Picker(selection: $gameModel.selectedMode, label: Text("マス目を選択"),content: {
+            Picker(selection: $gameModel.selectedSquaresMode, label: Text("マス目を選択"),content: {
+                ForEach(gameModel.squaresModeList, id: \.key){ mode in
+                    Text("\(mode.value)")
+                        .tag(mode.key)
+                        .font(.system(size: 50))
+                }
+            })
+            .pickerStyle(.menu)
+            
+            Picker(selection: $gameModel.selectedGameMode, label: Text("ゲーム形式を選択"),content: {
                 ForEach(gameModel.gameModeList, id: \.key){ mode in
                     Text("\(mode.value)")
                         .tag(mode.key)
