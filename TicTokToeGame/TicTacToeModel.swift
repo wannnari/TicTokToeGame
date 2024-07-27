@@ -28,7 +28,7 @@ class TicTacToeViewModel: ObservableObject {
         self.board = Array(repeating: nil, count: boardSize * boardSize)
     }
 
-    // マス目に丸バツを入れる処理
+    // マス目に丸バツを入れる処理（引き分けありモード）
     func makeMove(at index: Int, player: Bool) {
         guard board[index] == nil else { return }
 
@@ -50,6 +50,62 @@ class TicTacToeViewModel: ObservableObject {
         }
     }
 
+    //CPU対戦モードの場合の処理（引き分けありモード）
+    func cpuMove(player: Bool){
+        var randomBoard : [Int] = []
+        // 空のマスを検索
+        for searchBoard in 0..<boardSize*boardSize{
+            if board[searchBoard] == nil{
+                print(searchBoard)
+                randomBoard.append(searchBoard)
+            }
+        }
+
+        // 空のマスからランダムで生成
+        let moveBoard = randomBoard.randomElement()
+        var index : Int!
+        if moveBoard != nil {
+            index = moveBoard
+        } else {
+            return
+        }
+        let newMove = Move(index: index, player: player, timestamp: Date())
+        
+        moves.append(newMove)
+        board[index] = player
+        
+    }
+    
+    //CPU対戦モードの場合の処理）
+    //マス目に丸バツを入れたあと4つ以上の場合は古いマスを消す処理
+    func cpuMoveAfterRemove(player: Bool){
+        var randomBoard : [Int] = []
+        // 空のマスを検索
+        for searchBoard in 0..<boardSize*boardSize{
+            if board[searchBoard] == nil{
+                print(searchBoard)
+                randomBoard.append(searchBoard)
+            }
+        }
+
+        // 空のマスからランダムで生成
+        let moveBoard = randomBoard.randomElement()
+        var index : Int!
+        if moveBoard != nil {
+            index = moveBoard
+        } else {
+            return
+        }
+        let newMove = Move(index: index, player: player, timestamp: Date())
+        
+        moves.append(newMove)
+        board[index] = player
+        if moves.filter({ $0.player == player }).count > maxMove {
+            removeOldestMove(for: player)
+        }
+    }
+    
+    
     // 一番古いマスを消す処理
     private func removeOldestMove(for player: Bool) {
         if let oldestMove = moves.filter({ $0.player == player }).min(by: { $0.timestamp < $1.timestamp }) {

@@ -46,6 +46,15 @@ struct StartView: View {
                 }
             })
             .pickerStyle(.menu)
+            
+            Picker(selection: $gameModel.selectedVsMode, label: Text("対戦モードを選択"),content: {
+                ForEach(gameModel.vsModeList, id: \.key){ mode in
+                    Text("\(mode.value)")
+                        .tag(mode.key)
+                        .font(.system(size: 50))
+                }
+            })
+            .pickerStyle(.menu)
         }
     }
 }

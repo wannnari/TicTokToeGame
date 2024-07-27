@@ -20,6 +20,7 @@ struct GameView: View {
     var body: some View {
         let selectedSquaresMode = gameModel.selectedSquaresMode
         let selectedGameMode = gameModel.selectedGameMode
+        let selectedVsMode = gameModel.selectedVsMode
         let columnSize = Int(pow(Double(selectedSquaresMode),Double(2)))
 
         if (tictactoeModel.isGameSet){
@@ -62,8 +63,46 @@ struct GameView: View {
                                         if(tictactoeModel.board[index] == nil){
                                             if(selectedGameMode == 1){
                                                 tictactoeModel.makeMove(at:index, player: timerContorller.isTurnEnd)
+                                                // CPUの行動
+                                                if(selectedVsMode == 2){
+                                                    // ３つ揃ったら勝ち
+                                                    if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)){
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                                                            winner = tictactoeModel.hasFinidhedWin(currentPlayer: timerContorller.isTurnEnd)
+                                                            timerContorller.stop()
+                                                        }
+                                                    }else{
+                                                        // 全てマス目が埋まったとしても勝負がついていなければ引き分けにする
+                                                        if(tictactoeModel.isDraw(grid: tictactoeModel.board)){
+                                                            winner = tictactoeModel.hasFinishedDraw()
+                                                            timerContorller.stop()
+                                                        }else{
+                                                            timerContorller.restart()
+                                                        }
+                                                    }
+                                                    tictactoeModel.cpuMove(player: timerContorller.isTurnEnd)
+                                                }
                                             }else{
                                                 tictactoeModel.makeMoveAfterRemove(at:index, player: timerContorller.isTurnEnd)
+                                               // CPUの行動
+                                                if(selectedVsMode == 2){
+                                                    // ３つ揃ったら勝ち
+                                                    if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)){
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                                                            winner = tictactoeModel.hasFinidhedWin(currentPlayer: timerContorller.isTurnEnd)
+                                                            timerContorller.stop()
+                                                        }
+                                                    }else{
+                                                        // 全てマス目が埋まったとしても勝負がついていなければ引き分けにする
+                                                        if(tictactoeModel.isDraw(grid: tictactoeModel.board)){
+                                                            winner = tictactoeModel.hasFinishedDraw()
+                                                            timerContorller.stop()
+                                                        }else{
+                                                            timerContorller.restart()
+                                                        }
+                                                    }
+                                                    tictactoeModel.cpuMove(player: timerContorller.isTurnEnd)
+                                                }
                                             }
                                             // ３つ揃ったら勝ち
                                             if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)){
@@ -95,6 +134,8 @@ struct GameView: View {
         }
     }
 }
+
+
 
 //#Preview {
 //    ContentView()
