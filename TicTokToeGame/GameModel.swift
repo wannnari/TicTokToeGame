@@ -35,7 +35,7 @@ class gameModel : ObservableObject{
         gameMode.map{($0.key,$0.value)}.sorted{$0.key < $1.key}
     }
     
-    @Published var selectedGameMode : Int = 3
+    @Published var selectedGameMode : Int = 2
     
     //ゲームモードの選択肢
     let vsMode = [

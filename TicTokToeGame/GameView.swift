@@ -14,9 +14,9 @@ struct GameView: View {
     @EnvironmentObject var timerContorller: TimerModel
     @EnvironmentObject var gameModel : gameModel
     @ObservedObject var tictactoeModel : TicTacToeViewModel
-    @State var winner : String = ""
+    @State var finishedMessage : String = ""
     @State var selections: [Bool?] = []
-    
+    @State var isAllowTap : Bool = true
     var body: some View {
         let selectedSquaresMode = gameModel.selectedSquaresMode
         let selectedGameMode = gameModel.selectedGameMode
@@ -25,13 +25,14 @@ struct GameView: View {
 
         if (tictactoeModel.isGameSet){
             // どちらかが三つ並んで揃ったら結果画面に遷移
-            ResultView(winnerUser: $winner,resultGrid: $tictactoeModel.board)
+            ResultView(winnerUser: $finishedMessage,resultGrid: $tictactoeModel.board)
         }else{
             // ゲーム画面
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
                 VStack{
+
                     // ターンを表示
                     Text(timerContorller.isTurnEnd ? "⭕️の人のターン" : "❌の人のターン")
                         .font(.largeTitle)
@@ -58,69 +59,28 @@ struct GameView: View {
                                             .opacity(tictactoeModel.board[index] == nil ? 0 : 1 )
                                             .font(.largeTitle)
                                     )
+                                    .allowsHitTesting(isAllowTap)
                                     .onTapGesture {
                                         // 未入力の四角形をタッチしたらマルかバツになり相手のターンになる
                                         if(tictactoeModel.board[index] == nil){
-                                            if(selectedGameMode == 1){
-                                                tictactoeModel.makeMove(at:index, player: timerContorller.isTurnEnd)
-                                                // CPUの行動
-                                                if(selectedVsMode == 2){
-                                                    // ３つ揃ったら勝ち
-                                                    if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)){
-                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                                                            winner = tictactoeModel.hasFinidhedWin(currentPlayer: timerContorller.isTurnEnd)
-                                                            timerContorller.stop()
-                                                        }
-                                                    }else{
-                                                        // 全てマス目が埋まったとしても勝負がついていなければ引き分けにする
-                                                        if(tictactoeModel.isDraw(grid: tictactoeModel.board)){
-                                                            winner = tictactoeModel.hasFinishedDraw()
-                                                            timerContorller.stop()
-                                                        }else{
-                                                            timerContorller.restart()
-                                                        }
-                                                    }
-                                                    tictactoeModel.cpuMove(player: timerContorller.isTurnEnd)
-                                                }
-                                            }else{
-                                                tictactoeModel.makeMoveAfterRemove(at:index, player: timerContorller.isTurnEnd)
-                                               // CPUの行動
-                                                if(selectedVsMode == 2){
-                                                    // ３つ揃ったら勝ち
-                                                    if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)){
-                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                                                            winner = tictactoeModel.hasFinidhedWin(currentPlayer: timerContorller.isTurnEnd)
-                                                            timerContorller.stop()
-                                                        }
-                                                    }else{
-                                                        // 全てマス目が埋まったとしても勝負がついていなければ引き分けにする
-                                                        if(tictactoeModel.isDraw(grid: tictactoeModel.board)){
-                                                            winner = tictactoeModel.hasFinishedDraw()
-                                                            timerContorller.stop()
-                                                        }else{
-                                                            timerContorller.restart()
-                                                        }
-                                                    }
-                                                    tictactoeModel.cpuMove(player: timerContorller.isTurnEnd)
+                                                tictactoeModel.makeMove(at:index, player: timerContorller.isTurnEnd, isRemoveMode: selectedGameMode, isVSCPU: selectedVsMode)
+                                            if(tictactoeModel.isGameSet){
+                                                DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                                                    finishedMessage = tictactoeModel.displayFinishedMessage(player: timerContorller.isTurnEnd)
+                                                    timerContorller.stop()
                                                 }
                                             }
-                                            // ３つ揃ったら勝ち
-                                            if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)){
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                                                    winner = tictactoeModel.hasFinidhedWin(currentPlayer: timerContorller.isTurnEnd)
-                                                    timerContorller.stop()
-                                                }
-                                            }else{
-                                                // 全てマス目が埋まったとしても勝負がついていなければ引き分けにする
-                                                if(tictactoeModel.isDraw(grid: tictactoeModel.board)){
-                                                    winner = tictactoeModel.hasFinishedDraw()
-                                                    timerContorller.stop()
-                                                }else{
+                                            timerContorller.restart()
+                                            if(selectedVsMode == 2){
+                                                isAllowTap.toggle()
+                                                DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                                                    isAllowTap.toggle()
                                                     timerContorller.restart()
                                                 }
                                             }
                                         }
                                     }
+
                             }
                         }
                     }

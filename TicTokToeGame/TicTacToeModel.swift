@@ -29,34 +29,41 @@ class TicTacToeViewModel: ObservableObject {
     }
 
     // マス目に丸バツを入れる処理（引き分けありモード）
-    func makeMove(at index: Int, player: Bool) {
-        guard board[index] == nil else { return }
-
-        let newMove = Move(index: index, player: player, timestamp: Date())
-        moves.append(newMove)
-        board[index] = player
-    }
-    
-    // マス目に丸バツを入れたあと4つ以上の場合は古いマスを消す処理
-    func makeMoveAfterRemove(at index: Int, player: Bool) {
+    func makeMove(at index: Int, player: Bool, isRemoveMode: Int, isVSCPU: Int){
         guard board[index] == nil else { return }
 
         let newMove = Move(index: index, player: player, timestamp: Date())
         moves.append(newMove)
         board[index] = player
         
-        if moves.filter({ $0.player == player }).count > maxMove {
-            removeOldestMove(for: player)
+        if(isRemoveMode == 1){
+            if moves.filter({ $0.player == player }).count > maxMove {
+                removeOldestMove(for: player)
+            }
         }
+        
+        if(hasThreeInARow(grid: board) || isDraw(grid: board)){
+            isGameSet = true
+            return
+        }
+        
+        
+        if(isVSCPU == 2){
+            var cpuPlayer = player
+            cpuPlayer.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                self.cpuMove(player: cpuPlayer, isRemoveMode: isRemoveMode)
+            }
+        }
+        return
     }
-
+    
     //CPU対戦モードの場合の処理（引き分けありモード）
-    func cpuMove(player: Bool){
+    func cpuMove(player: Bool, isRemoveMode:Int){
         var randomBoard : [Int] = []
         // 空のマスを検索
         for searchBoard in 0..<boardSize*boardSize{
             if board[searchBoard] == nil{
-                print(searchBoard)
                 randomBoard.append(searchBoard)
             }
         }
@@ -74,37 +81,19 @@ class TicTacToeViewModel: ObservableObject {
         moves.append(newMove)
         board[index] = player
         
-    }
-    
-    //CPU対戦モードの場合の処理）
-    //マス目に丸バツを入れたあと4つ以上の場合は古いマスを消す処理
-    func cpuMoveAfterRemove(player: Bool){
-        var randomBoard : [Int] = []
-        // 空のマスを検索
-        for searchBoard in 0..<boardSize*boardSize{
-            if board[searchBoard] == nil{
-                print(searchBoard)
-                randomBoard.append(searchBoard)
+        if(isRemoveMode == 1){
+            if moves.filter({ $0.player == player }).count > maxMove {
+                removeOldestMove(for: player)
             }
         }
-
-        // 空のマスからランダムで生成
-        let moveBoard = randomBoard.randomElement()
-        var index : Int!
-        if moveBoard != nil {
-            index = moveBoard
-        } else {
+        
+        if(hasThreeInARow(grid: board) || isDraw(grid: board)){
+            isGameSet = true
             return
         }
-        let newMove = Move(index: index, player: player, timestamp: Date())
+        return
         
-        moves.append(newMove)
-        board[index] = player
-        if moves.filter({ $0.player == player }).count > maxMove {
-            removeOldestMove(for: player)
-        }
     }
-    
     
     // 一番古いマスを消す処理
     private func removeOldestMove(for player: Bool) {
@@ -194,16 +183,27 @@ class TicTacToeViewModel: ObservableObject {
         return false
     }
     
+    
+    func displayFinishedMessage(player: Bool) -> String{
+        var message : String = ""
+        if(isDraw(grid: board)){
+            message = hasFinishedDraw()
+        }else{
+            message = hasFinishedWin(currentPlayer: player)
+        }
+        return message
+    }
+    
     // 勝利者のコメントとゲーム終了へ遷移するフラグを立てる
-    func hasFinidhedWin(currentPlayer: Bool) -> String{
+    private func hasFinishedWin(currentPlayer: Bool) -> String{
         let winner = currentPlayer ? "⭕️の人の勝利！" : "❌の人の勝利！"
-        self.isGameSet.toggle()
+//        self.isGameSet.toggle()
         return winner
     }
     
     //　引き分け時のコメントとゲーム終了へ遷移するフラグを立てる
-    func hasFinishedDraw() -> String{
-        self.isGameSet.toggle()
+    private func hasFinishedDraw() -> String{
+//        self.isGameSet.toggle()
         return "引き分け!!"
     }
     
