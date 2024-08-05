@@ -16,45 +16,58 @@ struct StartView: View {
             GameView(tictactoeModel: TicTacToeViewModel(boardSize: gameModel.selectedSquaresMode))
                 .environmentObject(TimerModel())
         }else{
-            Text("⭕️❌ゲーム")
-                .font(.system(size: 50))
-
-            Button(action:{ isStart.toggle()
-            }){
-                Text("スタート")
-                    .padding()
+            VStack{
+                Text("⭕️❌ゲーム")
                     .font(.system(size: 50))
-                    .foregroundColor(Color.white)
-                    .background(Color.purple)
-                    .cornerRadius(10)
+                VStack(alignment:.leading){
+                    HStack{
+                        Text("マス目")
+                        Spacer()
+                        Picker(selection: $gameModel.selectedSquaresMode, label: Text("マス目を選択"),content: {
+                            ForEach(gameModel.squaresModeList, id: \.key){ mode in
+                                Text("\(mode.value)")
+                                    .tag(mode.key)
+                                    .font(.system(size: 50))
+                            }
+                        })
+                        .pickerStyle(.menu)
+                    }
+                    HStack{
+                        Text("ゲーム形式")
+                        Spacer()
+                        Picker(selection: $gameModel.selectedGameMode, label: Text("ゲーム形式を選択"),content: {
+                            ForEach(gameModel.gameModeList, id: \.key){ mode in
+                                Text("\(mode.value)")
+                                    .tag(mode.key)
+                                    .font(.system(size: 30))
+                            }
+                        })
+                        .pickerStyle(.menu)
+                    }
+                    HStack{
+                        Text("対戦モード")
+                        Spacer()
+                        Picker(selection: $gameModel.selectedVsMode, label: Text("対戦モードを選択"),content: {
+                            ForEach(gameModel.vsModeList, id: \.key){ mode in
+                                Text("\(mode.value)")
+                                    .tag(mode.key)
+                                    .font(.system(size: 50))
+                            }
+                        })
+                        .pickerStyle(.menu)
+                    }
+                }
+                .padding(70)
+                Button(action:{ isStart.toggle()
+                }){
+                    Text("スタート")
+                        .padding()
+                        .font(.system(size: 40))
+                        .foregroundColor(Color.white)
+                        .background(Color.purple)
+                        .cornerRadius(10)
+                }.padding(50)
             }
-            
-            Picker(selection: $gameModel.selectedSquaresMode, label: Text("マス目を選択"),content: {
-                ForEach(gameModel.squaresModeList, id: \.key){ mode in
-                    Text("\(mode.value)")
-                        .tag(mode.key)
-                        .font(.system(size: 50))
-                }
-            })
-            .pickerStyle(.menu)
-            
-            Picker(selection: $gameModel.selectedGameMode, label: Text("ゲーム形式を選択"),content: {
-                ForEach(gameModel.gameModeList, id: \.key){ mode in
-                    Text("\(mode.value)")
-                        .tag(mode.key)
-                        .font(.system(size: 50))
-                }
-            })
-            .pickerStyle(.menu)
-            
-            Picker(selection: $gameModel.selectedVsMode, label: Text("対戦モードを選択"),content: {
-                ForEach(gameModel.vsModeList, id: \.key){ mode in
-                    Text("\(mode.value)")
-                        .tag(mode.key)
-                        .font(.system(size: 50))
-                }
-            })
-            .pickerStyle(.menu)
         }
     }
 }

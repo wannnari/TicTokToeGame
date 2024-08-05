@@ -19,7 +19,7 @@ class TicTacToeViewModel: ObservableObject {
     @Published var board: [Bool?] = Array(repeating: nil, count: 9)
     @Published var moves: [Move] = []
     @Published var isGameSet = false
-    
+    @Published var message : String = ""
     let boardSize: Int
     let maxMove : Int = 3
     
@@ -28,7 +28,7 @@ class TicTacToeViewModel: ObservableObject {
         self.board = Array(repeating: nil, count: boardSize * boardSize)
     }
 
-    // マス目に丸バツを入れる処理（引き分けありモード）
+    // マス目に丸バツを入れる処理
     func makeMove(at index: Int, player: Bool, isRemoveMode: Int, isVSCPU: Int){
         guard board[index] == nil else { return }
 
@@ -36,19 +36,19 @@ class TicTacToeViewModel: ObservableObject {
         moves.append(newMove)
         board[index] = player
         
-        if(isRemoveMode == 1){
+        if(isRemoveMode == 2){
             if moves.filter({ $0.player == player }).count > maxMove {
                 removeOldestMove(for: player)
             }
         }
         
         if(hasThreeInARow(grid: board) || isDraw(grid: board)){
-            isGameSet = true
-            return
-        }
-        
-        
-        if(isVSCPU == 2){
+            message = displayFinishedMessage(player: player)
+            DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                self.isGameSet = true
+                return
+            }
+        }else if(isVSCPU == 2){
             var cpuPlayer = player
             cpuPlayer.toggle()
             DispatchQueue.main.asyncAfter(deadline: .now()+3){
@@ -58,7 +58,7 @@ class TicTacToeViewModel: ObservableObject {
         return
     }
     
-    //CPU対戦モードの場合の処理（引き分けありモード）
+    //CPU対戦モードの場合の処理
     func cpuMove(player: Bool, isRemoveMode:Int){
         var randomBoard : [Int] = []
         // 空のマスを検索
@@ -81,15 +81,18 @@ class TicTacToeViewModel: ObservableObject {
         moves.append(newMove)
         board[index] = player
         
-        if(isRemoveMode == 1){
+        if(isRemoveMode == 2){
             if moves.filter({ $0.player == player }).count > maxMove {
                 removeOldestMove(for: player)
             }
         }
         
         if(hasThreeInARow(grid: board) || isDraw(grid: board)){
-            isGameSet = true
-            return
+            message = displayFinishedMessage(player: player)
+            DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                self.isGameSet = true
+                return
+            }
         }
         return
         
@@ -183,7 +186,7 @@ class TicTacToeViewModel: ObservableObject {
         return false
     }
     
-    
+    // ゲーム終了のメッセージを入れる
     func displayFinishedMessage(player: Bool) -> String{
         var message : String = ""
         if(isDraw(grid: board)){

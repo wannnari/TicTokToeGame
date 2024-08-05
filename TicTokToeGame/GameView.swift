@@ -14,7 +14,6 @@ struct GameView: View {
     @EnvironmentObject var timerContorller: TimerModel
     @EnvironmentObject var gameModel : gameModel
     @ObservedObject var tictactoeModel : TicTacToeViewModel
-    @State var finishedMessage : String = ""
     @State var selections: [Bool?] = []
     @State var isAllowTap : Bool = true
     var body: some View {
@@ -25,14 +24,13 @@ struct GameView: View {
 
         if (tictactoeModel.isGameSet){
             // どちらかが三つ並んで揃ったら結果画面に遷移
-            ResultView(winnerUser: $finishedMessage,resultGrid: $tictactoeModel.board)
+            ResultView(winnerUser: $tictactoeModel.message,resultGrid: $tictactoeModel.board)
         }else{
             // ゲーム画面
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
                 VStack{
-
                     // ターンを表示
                     Text(timerContorller.isTurnEnd ? "⭕️の人のターン" : "❌の人のターン")
                         .font(.largeTitle)
@@ -59,23 +57,23 @@ struct GameView: View {
                                             .opacity(tictactoeModel.board[index] == nil ? 0 : 1 )
                                             .font(.largeTitle)
                                     )
-                                    .allowsHitTesting(isAllowTap)
+                                    .allowsHitTesting(isAllowTap) //CPUのターン中はプレイヤーは行動できない
                                     .onTapGesture {
                                         // 未入力の四角形をタッチしたらマルかバツになり相手のターンになる
                                         if(tictactoeModel.board[index] == nil){
                                                 tictactoeModel.makeMove(at:index, player: timerContorller.isTurnEnd, isRemoveMode: selectedGameMode, isVSCPU: selectedVsMode)
-                                            if(tictactoeModel.isGameSet){
-                                                DispatchQueue.main.asyncAfter(deadline: .now()+3){
-                                                    finishedMessage = tictactoeModel.displayFinishedMessage(player: timerContorller.isTurnEnd)
+                                            
+                                            // どちらかが先に3つ揃うか引き分けの場合には時計をストップさせる
+                                            if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)||tictactoeModel.isDraw(grid: tictactoeModel.board)){
                                                     timerContorller.stop()
-                                                }
-                                            }
-                                            timerContorller.restart()
-                                            if(selectedVsMode == 2){
-                                                isAllowTap.toggle()
-                                                DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                                            }else{
+                                                timerContorller.restart()
+                                                if(selectedVsMode == 2){
                                                     isAllowTap.toggle()
-                                                    timerContorller.restart()
+                                                    DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                                                        isAllowTap.toggle()
+                                                        timerContorller.restart()
+                                                    }
                                                 }
                                             }
                                         }

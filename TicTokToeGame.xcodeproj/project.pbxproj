@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		E3215BC82BDF6DC3003642E7 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3215BC72BDF6DC3003642E7 /* GameModel.swift */; };
 		E3215BCA2BE51027003642E7 /* FinishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3215BC92BE51027003642E7 /* FinishView.swift */; };
-		E34799572BE60DE7002DB362 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34799562BE60DE7002DB362 /* GameViewModel.swift */; };
-		E3BF64A62BC57EB400BCF0DC /* CPUModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */; };
 		E3BF64E22BC9752100BCF0DC /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BF64E12BC9752100BCF0DC /* ResultView.swift */; };
 		E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C3A3932BBC3AB8003E24A7 /* TicTokToeGameApp.swift */; };
 		E3C3A3982BBC3AB9003E24A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3C3A3972BBC3AB9003E24A7 /* Assets.xcassets */; };
@@ -24,8 +22,6 @@
 /* Begin PBXFileReference section */
 		E3215BC72BDF6DC3003642E7 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		E3215BC92BE51027003642E7 /* FinishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishView.swift; sourceTree = "<group>"; };
-		E34799562BE60DE7002DB362 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
-		E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUModel.swift; sourceTree = "<group>"; };
 		E3BF64E12BC9752100BCF0DC /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		E3C3A3902BBC3AB8003E24A7 /* TicTokToeGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTokToeGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3C3A3932BBC3AB8003E24A7 /* TicTokToeGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTokToeGameApp.swift; sourceTree = "<group>"; };
@@ -69,11 +65,9 @@
 			children = (
 				E3C3A3932BBC3AB8003E24A7 /* TicTokToeGameApp.swift */,
 				E3C3A3952BBC3AB8003E24A7 /* GameView.swift */,
-				E34799562BE60DE7002DB362 /* GameViewModel.swift */,
 				E3C3A3A12BBC4285003E24A7 /* StartView.swift */,
 				E3C3A3A32BC2B071003E24A7 /* TimerModel.swift */,
 				E3BF64E12BC9752100BCF0DC /* ResultView.swift */,
-				E3BF64A52BC57EB400BCF0DC /* CPUModel.swift */,
 				E3215BC72BDF6DC3003642E7 /* GameModel.swift */,
 				E3215BC92BE51027003642E7 /* FinishView.swift */,
 				E3E720C42C46655B009B0006 /* TicTacToeModel.swift */,
@@ -161,11 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E34799572BE60DE7002DB362 /* GameViewModel.swift in Sources */,
 				E3215BC82BDF6DC3003642E7 /* GameModel.swift in Sources */,
 				E3C3A3A22BBC4285003E24A7 /* StartView.swift in Sources */,
 				E3BF64E22BC9752100BCF0DC /* ResultView.swift in Sources */,
-				E3BF64A62BC57EB400BCF0DC /* CPUModel.swift in Sources */,
 				E3C3A3A42BC2B071003E24A7 /* TimerModel.swift in Sources */,
 				E3C3A3942BBC3AB8003E24A7 /* TicTokToeGameApp.swift in Sources */,
 				E3CC66452BC0163000D65627 /* GameView.swift in Sources */,

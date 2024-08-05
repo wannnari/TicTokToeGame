@@ -35,20 +35,20 @@ class gameModel : ObservableObject{
         gameMode.map{($0.key,$0.value)}.sorted{$0.key < $1.key}
     }
     
-    @Published var selectedGameMode : Int = 2
+    @Published var selectedGameMode : Int = 1
     
-    //ゲームモードの選択肢
+    //VSモードの選択肢
     let vsMode = [
         1 : "一台で対戦",
         2 : "CPUと対戦",
-        3 : "オンラインで対戦"
+//        3 : "オンラインで対戦"
     ]
     
     var vsModeList: [(key: Int, value: String)]{
         vsMode.map{($0.key,$0.value)}.sorted{$0.key < $1.key}
     }
     
-    @Published var selectedVsMode : Int = 3
+    @Published var selectedVsMode : Int = 1
 }
 
 
