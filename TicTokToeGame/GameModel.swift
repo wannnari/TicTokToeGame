@@ -49,6 +49,7 @@ class gameModel : ObservableObject{
     }
     
     @Published var selectedVsMode : Int = 1
+    
 }
 
 

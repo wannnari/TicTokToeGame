@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StartView: View {
-    @State var isStart: Bool = false;
+    @State var isStart: Bool = false
     @EnvironmentObject var gameModel:gameModel
     
     var body: some View {
@@ -58,19 +58,24 @@ struct StartView: View {
                     }
                 }
                 .padding(70)
-                Button(action:{ isStart.toggle()
-                }){
+                
+                Button(action:{
+                    isStart.toggle()
+                },label:{
                     Text("スタート")
                         .padding()
                         .font(.system(size: 40))
                         .foregroundColor(Color.white)
                         .background(Color.purple)
                         .cornerRadius(10)
-                }.padding(50)
+                })
             }
         }
     }
 }
+
+
+
 
 //#Preview {
 //    StartView()

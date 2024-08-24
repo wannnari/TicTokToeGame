@@ -35,7 +35,7 @@ struct GameView: View {
                     Text(timerContorller.isTurnEnd ? "⭕️の人のターン" : "❌の人のターン")
                         .font(.largeTitle)
                         .padding()
-                    
+
                     // タイマーを表示　15秒過ぎたら自動的に相手ターンに移動
                     Text("\(timerContorller.count)")
                         .font(.system(size: 50))
@@ -65,7 +65,8 @@ struct GameView: View {
                                             
                                             // どちらかが先に3つ揃うか引き分けの場合には時計をストップさせる
                                             if(tictactoeModel.hasThreeInARow(grid: tictactoeModel.board)||tictactoeModel.isDraw(grid: tictactoeModel.board)){
-                                                    timerContorller.stop()
+                                                isAllowTap.toggle()
+                                                timerContorller.stop()
                                             }else{
                                                 timerContorller.restart()
                                                 if(selectedVsMode == 2){
@@ -87,6 +88,7 @@ struct GameView: View {
             // 画面切り替えと同時にタイマースタート
             .onAppear(){
                 selections = Array(repeating: nil, count: columnSize)
+                isAllowTap = true
                 timerContorller.start()
             }
         }
